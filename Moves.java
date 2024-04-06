@@ -3,9 +3,10 @@ package game2048;
 public class Moves {
 	// declare variables
 	Board board;
-	
+	boolean play;
 	public Moves() {
 		board = new Board();
+		play = true;
 	}
 	
 	// create starter board
@@ -14,15 +15,32 @@ public class Moves {
 		int random = (int) (Math.random() * 10) + 1;
 		int valueOfSpot = (random != 9) ? 2 : 4;
 		
-		while (true) {
-			int randomR = (int) (Math.random() * 3);
-			int randomC = (int) (Math.random() * 3);
-			if (board.getSpot(randomR, randomC) == 0) {
-				board.setBoard(randomR, randomC, valueOfSpot);
-				break;
-			
+		// add spots if there are empty ones
+		if (anyValid()) {
+			while (true) {
+				int randomR = (int) (Math.random() * 3);
+				int randomC = (int) (Math.random() * 3);
+				if (board.getSpot(randomR, randomC) == 0) {
+					board.setBoard(randomR, randomC, valueOfSpot);
+					return;
+				}
 			}
 		}
+	}
+	
+	public boolean anyValid() {
+		// iterate through board for empty spots
+		for (int i = 0; i < 4; i++) {
+			for (int k = 0; k < 4; k++) {
+				if (board.getSpot(i, k) == 0) {
+					return true;
+				}
+			}
+		}
+		
+		// return false if not and set play to false
+		play = false;
+		return false;
 	}
 	
 	public void createBoard() {
@@ -30,6 +48,7 @@ public class Moves {
 		addSpot();
 	}
 	
+	// move
 	public void moveUp() {
 		// start from second row
 		for (int i = 1; i < 3; i++) {
@@ -106,6 +125,7 @@ public class Moves {
 		}
 	}
 	
+	// merge
 	public void mergeUp() {
 		// start from 2nd row
 		for (int i = 1; i < 4; i++) {
@@ -156,5 +176,43 @@ public class Moves {
 				}
 			}
 		}
+	}
+	
+	// one turn
+	public void turnUp() {
+		moveUp();
+		mergeUp();
+		moveUp();
+		addSpot();
+		System.out.println(board.printBoard());
+	}
+	
+	public void turnDown() {
+		moveDown();
+		mergeDown();
+		moveDown();
+		addSpot();
+		System.out.println(board.printBoard());
+	}
+	
+	public void turnLeft() {
+		moveLeft();
+		mergeLeft();
+		moveLeft();
+		addSpot();
+		System.out.println(board.printBoard());
+	}
+	
+	public void turnRight() {
+		moveRight();
+		mergeRight();
+		moveRight();
+		addSpot();
+		System.out.println(board.printBoard());
+	}
+	
+	// getters
+	public boolean getPlay() {
+		return play;
 	}
 }
