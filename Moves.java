@@ -18,8 +18,8 @@ public class Moves {
 		// add spots if there are empty ones
 		if (anyValid()) {
 			while (true) {
-				int randomR = (int) (Math.random() * 3);
-				int randomC = (int) (Math.random() * 3);
+				int randomR = (int) (Math.random() * 4);
+				int randomC = (int) (Math.random() * 4);
 				if (board.getSpot(randomR, randomC) == 0) {
 					board.setBoard(randomR, randomC, valueOfSpot);
 					return;
@@ -51,7 +51,7 @@ public class Moves {
 	// move
 	public void moveUp() {
 		// start from second row
-		for (int i = 1; i < 3; i++) {
+		for (int i = 1; i < 4; i++) {
 			// all columns
 			for (int j = 0; j < 4; j++) {
 				// make sure spot above is empty
